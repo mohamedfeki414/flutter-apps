@@ -1,4 +1,5 @@
 import 'package:flutter/material.dart';
+import 'package:flutter_activite_1/pages/page1.dart';
 
 void main() {
   runApp(const MyApp());
@@ -21,8 +22,7 @@ class MyApp extends StatelessWidget {
   }
 }
 
-class MaPremierPage {
-}
+
 
 class MyHomePage extends StatefulWidget {
   const MyHomePage({super.key, required this.title});
