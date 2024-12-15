@@ -6,14 +6,17 @@ class MyApp extends StatefulWidget {
   const MyApp({super.key});
 
   @override
+  // ignore: library_private_types_in_public_api
   _MyAppState createState() => _MyAppState();
 }
 
 class _MyAppState extends State<MyApp> {
   // Index pour la navigation via BottomNavigationBar
-  int _selectedIndex = 0;
+  // ignore: unused_field
+  var _selectedIndex = 0;
 
   // Pages associées aux éléments du BottomNavigationBar
+  // ignore: unused_field
   static const List<Widget> _pages = <Widget>[
     Text('Page Accueil', style: TextStyle(fontSize: 24)),
     Text('Page Recherche', style: TextStyle(fontSize: 24)),
@@ -21,6 +24,7 @@ class _MyAppState extends State<MyApp> {
   ];
 
   // Fonction appelée lors de la sélection d'un élément de la barre de navigation
+  // ignore: unused_element
   void _onItemTapped(int index) {
     setState(() {
       _selectedIndex = index;
@@ -32,70 +36,12 @@ class _MyAppState extends State<MyApp> {
     return MaterialApp(
       title: 'TP Flutter 3',
       theme: ThemeData(primarySwatch: Colors.blue),
-      initialRoute: '/',
+      initialRoute: '/', // Route initiale
       routes: {
-        '/': (context) => const HomePage(),
+        '/': (context) => const HomePage(), // Page principale
         '/second': (context) => const SecondPage(),
         '/third': (context) => const ThirdPage(),
       },
-      home: Scaffold(
-        appBar: AppBar(
-          title: const Text('TP Flutter 3'),
-        ),
-        drawer: Drawer(
-          child: ListView(
-            padding: EdgeInsets.zero,
-            children: <Widget>[
-              const DrawerHeader(
-                decoration: BoxDecoration(color: Colors.blue),
-                child: Text(
-                  'Header du Drawer',
-                  style: TextStyle(
-                    color: Colors.white,
-                    fontSize: 24,
-                  ),
-                ),
-              ),
-              ListTile(
-                leading: const Icon(Icons.message),
-                title: const Text('Messages'),
-                onTap: () {
-                  Navigator.pushNamed(context, '/second');
-                },
-              ),
-              ListTile(
-                leading: const Icon(Icons.account_circle),
-                title: const Text('Profil'),
-                onTap: () {
-                  Navigator.pushNamed(context, '/third');
-                },
-              ),
-            ],
-          ),
-        ),
-        body: Center(
-          child: _pages.elementAt(_selectedIndex), // Affiche la page sélectionnée
-        ),
-        bottomNavigationBar: BottomNavigationBar(
-          items: const <BottomNavigationBarItem>[
-            BottomNavigationBarItem(
-              icon: Icon(Icons.home),
-              label: 'Accueil',
-            ),
-            BottomNavigationBarItem(
-              icon: Icon(Icons.search),
-              label: 'Recherche',
-            ),
-            BottomNavigationBarItem(
-              icon: Icon(Icons.person),
-              label: 'Profil',
-            ),
-          ],
-          currentIndex: _selectedIndex,
-          selectedItemColor: Colors.blue,
-          onTap: _onItemTapped,
-        ),
-      ),
     );
   }
 }
@@ -109,6 +55,37 @@ class HomePage extends StatelessWidget {
     return Scaffold(
       appBar: AppBar(
         title: const Text('Accueil'),
+      ),
+      drawer: Drawer(
+        child: ListView(
+          padding: EdgeInsets.zero,
+          children: <Widget>[
+            const DrawerHeader(
+              decoration: BoxDecoration(color: Colors.blue),
+              child: Text(
+                'Header du Drawer',
+                style: TextStyle(
+                  color: Colors.white,
+                  fontSize: 24,
+                ),
+              ),
+            ),
+            ListTile(
+              leading: const Icon(Icons.message),
+              title: const Text('Messages'),
+              onTap: () {
+                Navigator.pushNamed(context, '/second');
+              },
+            ),
+            ListTile(
+              leading: const Icon(Icons.account_circle),
+              title: const Text('Profil'),
+              onTap: () {
+                Navigator.pushNamed(context, '/third');
+              },
+            ),
+          ],
+        ),
       ),
       body: const Center(
         child: Text(
