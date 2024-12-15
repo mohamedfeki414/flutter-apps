@@ -30,6 +30,11 @@ environment:
 dependencies:
   flutter:
     sdk: flutter
+    assets:
+    - assets/sunrise1.jpg
+    - assets/sunrise2.jpg
+    - assets/sunrise3.jpg
+
     
 
 
