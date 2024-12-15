@@ -16,12 +16,16 @@ class MyApp extends StatelessWidget {
       
       home: Scaffold( 
         appBar: AppBar( 
-          title: const Text('Page avec Texte'), 
+          title: const Text('Page avec Texte' ), 
             ), 
-        body: const Center( 
-          child: Text('Bonjour, Flutter!'), 
-            ),
+        body:  const Text( 
+        'Bonjour, Flutter!', 
+        textAlign: TextAlign.center, 
+        textDirection: TextDirection.ltr, 
+        overflow: TextOverflow.ellipsis, 
+        maxLines: 1, 
              ), 
+    ),
     );
   }
 }
