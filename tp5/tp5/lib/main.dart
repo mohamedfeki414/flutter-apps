@@ -1,44 +1,53 @@
 import 'package:flutter/material.dart';
 
 void main() {
-  runApp(MaterialApp(
-    initialRoute: '/',
-    routes: {
-      '/': (context) => const FormPage(),
-      '/display': (context) => const DisplayPage(),
-    },
-  ));
+  runApp(const MyApp());
 }
 
-class FormPage extends StatefulWidget {
-  const FormPage({super.key});
+class MyApp extends StatelessWidget {
+  const MyApp({super.key});
+
+  @override
+  Widget build(BuildContext context) {
+    return const MaterialApp(
+      home: FormulairePage(),
+    );
+  }
+}
+
+class FormulairePage extends StatefulWidget {
+  const FormulairePage({super.key});
 
   @override
   // ignore: library_private_types_in_public_api
-  _FormPageState createState() => _FormPageState();
+  _FormulairePageState createState() => _FormulairePageState();
 }
 
-class _FormPageState extends State<FormPage> {
+class _FormulairePageState extends State<FormulairePage> {
   final _formKey = GlobalKey<FormState>();
-  String _name = '';
+  String _nom = '';
   String _email = '';
   String _selectedOption = 'Option 1';
-  bool _isChecked = false;
 
   @override
   Widget build(BuildContext context) {
     return Scaffold(
       appBar: AppBar(
-        title: const Text('Formulaire'),
+        title: const Text('Formulaire Flutter'),
       ),
       body: Padding(
         padding: const EdgeInsets.all(16.0),
         child: Form(
           key: _formKey,
           child: Column(
-            children: <Widget>[
+            crossAxisAlignment: CrossAxisAlignment.start,
+            children: [
+              // Champ de texte pour le nom
               TextFormField(
-                decoration: const InputDecoration(labelText: 'Nom'),
+                decoration: const InputDecoration(
+                  labelText: 'Nom',
+                  border: OutlineInputBorder(),
+                ),
                 validator: (value) {
                   if (value == null || value.isEmpty) {
                     return 'Veuillez entrer votre nom';
@@ -46,11 +55,16 @@ class _FormPageState extends State<FormPage> {
                   return null;
                 },
                 onSaved: (value) {
-                  _name = value!;
+                  _nom = value!;
                 },
               ),
+              const SizedBox(height: 16.0),
+              // Champ de texte pour l'email
               TextFormField(
-                decoration: const InputDecoration(labelText: 'Email'),
+                decoration: const InputDecoration(
+                  labelText: 'Email',
+                  border: OutlineInputBorder(),
+                ),
                 validator: (value) {
                   if (value == null || !value.contains('@')) {
                     return 'Veuillez entrer un email valide';
@@ -61,10 +75,12 @@ class _FormPageState extends State<FormPage> {
                   _email = value!;
                 },
               ),
-              const SizedBox(height: 16),
+              const SizedBox(height: 16.0),
+              // Boutons radio pour les options
+              const Text('Boutons Radio :'),
               Row(
                 children: [
-                  Radio(
+                  Radio<String>(
                     value: 'Option 1',
                     groupValue: _selectedOption,
                     onChanged: (value) {
@@ -74,7 +90,7 @@ class _FormPageState extends State<FormPage> {
                     },
                   ),
                   const Text('Option 1'),
-                  Radio(
+                  Radio<String>(
                     value: 'Option 2',
                     groupValue: _selectedOption,
                     onChanged: (value) {
@@ -86,32 +102,31 @@ class _FormPageState extends State<FormPage> {
                   const Text('Option 2'),
                 ],
               ),
-              Row(
-                children: [
-                  Checkbox(
-                    value: _isChecked,
-                    onChanged: (value) {
-                      setState(() {
-                        _isChecked = value!;
-                      });
-                    },
-                  ),
-                  const Text('Accepter les termes'),
-                ],
-              ),
-              const SizedBox(height: 16),
+              const SizedBox(height: 16.0),
+              // Bouton de soumission
               ElevatedButton(
                 onPressed: () {
                   if (_formKey.currentState!.validate()) {
                     _formKey.currentState!.save();
-                    Navigator.pushNamed(
-                      context,
-                      '/display',
-                      arguments: {
-                        'name': _name,
-                        'email': _email,
-                        'option': _selectedOption,
-                        'isChecked': _isChecked,
+
+                    // Afficher un dialogue avec les données soumises
+                    showDialog(
+                      context: context,
+                      builder: (BuildContext context) {
+                        return AlertDialog(
+                          title: const Text('Données soumises'),
+                          content: Text(
+                            'Nom: $_nom\nEmail: $_email\nOption: $_selectedOption',
+                          ),
+                          actions: [
+                            TextButton(
+                              onPressed: () {
+                                Navigator.of(context).pop();
+                              },
+                              child: const Text('OK'),
+                            ),
+                          ],
+                        );
                       },
                     );
                   }
@@ -120,34 +135,6 @@ class _FormPageState extends State<FormPage> {
               ),
             ],
           ),
-        ),
-      ),
-    );
-  }
-}
-
-class DisplayPage extends StatelessWidget {
-  const DisplayPage({super.key});
-
-  @override
-  Widget build(BuildContext context) {
-    final Map<String, dynamic> args =
-        ModalRoute.of(context)?.settings.arguments as Map<String, dynamic>;
-
-    return Scaffold(
-      appBar: AppBar(
-        title: const Text('Données du formulaire'),
-      ),
-      body: Padding(
-        padding: const EdgeInsets.all(16.0),
-        child: Column(
-          crossAxisAlignment: CrossAxisAlignment.start,
-          children: [
-            Text('Nom : ${args['name']}'),
-            Text('Email : ${args['email']}'),
-            Text('Option sélectionnée : ${args['option']}'),
-            Text('Case cochée : ${args['isChecked'] ? "Oui" : "Non"}'),
-          ],
         ),
       ),
     );
