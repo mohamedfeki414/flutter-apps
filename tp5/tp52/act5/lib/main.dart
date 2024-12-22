@@ -1,40 +1,31 @@
 import 'package:flutter/material.dart';
 
 void main() {
-  runApp(const MyApp());
+  runApp(const MaterialApp(
+    home: FormPage(),
+  ));
 }
 
-class MyApp extends StatelessWidget {
-  const MyApp({super.key});
-
-  @override
-  Widget build(BuildContext context) {
-    return const MaterialApp(
-      home: FormulaireAvance(),
-    );
-  }
-}
-
-class FormulaireAvance extends StatefulWidget {
-  const FormulaireAvance({super.key});
+class FormPage extends StatefulWidget {
+  const FormPage({super.key});
 
   @override
   // ignore: library_private_types_in_public_api
-  _FormulaireAvanceState createState() => _FormulaireAvanceState();
+  _FormPageState createState() => _FormPageState();
 }
 
-class _FormulaireAvanceState extends State<FormulaireAvance> {
+class _FormPageState extends State<FormPage> {
   final _formKey = GlobalKey<FormState>();
   String _nom = '';
   String _selectedDropdownValue = 'Java';
-  String _selectedOption = 'Option 1';
+  String _selectedOption = 'Homme';
   bool _isChecked = false;
 
   @override
   Widget build(BuildContext context) {
     return Scaffold(
       appBar: AppBar(
-        title: const Text('Formulaire Avancé'),
+        title: const Text('Formulaire'),
       ),
       body: Padding(
         padding: const EdgeInsets.all(16.0),
