@@ -32,9 +32,9 @@ class MyApp extends StatelessWidget {
 
 void addTeacher() {
   FirebaseFirestore.instance.collection('enseignant').add({
-    'Id_enseignant': '12345',
-    'nom': 'Ali',
-    'prenom': 'Ben Salah',
+    'Id_enseignant': '2356',
+    'nom': 'Med',
+    'prenom': 'salah',
     'grade': 'Professeur',
     'specialite': 'Informatique',
   }).then((value) {
