@@ -6,26 +6,16 @@ class MyApp extends StatefulWidget {
   const MyApp({super.key});
 
   @override
+  // ignore: library_private_types_in_public_api
   _MyAppState createState() => _MyAppState();
 }
 
 class _MyAppState extends State<MyApp> {
   // Index pour la navigation via BottomNavigationBar
-  int _selectedIndex = 0;
 
   // Pages associées aux éléments du BottomNavigationBar
-  static const List<Widget> _pages = <Widget>[
-    Text('Page Accueil', style: TextStyle(fontSize: 24)),
-    Text('Page Recherche', style: TextStyle(fontSize: 24)),
-    Text('Page Profil', style: TextStyle(fontSize: 24)),
-  ];
 
   // Fonction appelée lors de la sélection d'un élément de la barre de navigation
-  void _onItemTapped(int index) {
-    setState(() {
-      _selectedIndex = index;
-    });
-  }
 
   @override
   Widget build(BuildContext context) {
